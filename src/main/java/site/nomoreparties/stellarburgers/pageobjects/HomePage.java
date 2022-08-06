@@ -6,9 +6,10 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
-import static com.codeborne.selenide.Condition.cssClass;
-import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.page;
+import static com.codeborne.selenide.Selenide.sleep;
+
 
 public class HomePage extends HeaderPage {
 
@@ -18,16 +19,24 @@ public class HomePage extends HeaderPage {
     @FindBy(how = How.XPATH, using = ".//h1[text()='Соберите бургер']")
     private SelenideElement titleHomePage;
 
-    //локатор вкладки "Булки"
-    @FindBy(how = How.XPATH, using = ".//span[text()='Булки']")
+    //локатор активной вкладки "Булки" (при загрузке страницы по умолчанию активна)
+    @FindBy(how = How.XPATH, using = ".//div[@class = 'tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']//span[text()='Булки']")
     private SelenideElement bunsTab;
 
-    //локатор вкладки "Соусы"
-    @FindBy(how = How.XPATH, using = ".//span[text()='Соусы']")
+    //локатор не активной вкладки "Соусы"
+    @FindBy(how = How.XPATH, using = ".//div//span[text()='Соусы']")
+    private SelenideElement inActiveSauceTab;
+
+    //локатор активной вкладки "Соусы"
+    @FindBy(how = How.XPATH, using = ".//div[@class = 'tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']//span[text()='Соусы']")
     private SelenideElement sauceTab;
 
-    //локатор вкладки "Начинки"
-    @FindBy(how = How.XPATH, using = ".//span[text()='Начинки']")
+    //локатор не активной вкладки "Начинки"
+    @FindBy(how = How.XPATH, using = ".//div//span[text() ='Начинки']")
+    private SelenideElement inActiveFillingTab;
+
+    //локатор активной вкладки "Начинки"
+    @FindBy(how = How.XPATH, using = ".//div[@class = 'tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']//span[text() ='Начинки']")
     private SelenideElement fillingTab;
 
     //локатор раздела "Булки"
@@ -57,28 +66,27 @@ public class HomePage extends HeaderPage {
         return this;
     }
 
-    @Step("Проверка, что вкладка \"Булки\" имеет определенный cssClass")
-    public boolean isActiveBunsTab()  {
-        bunsSection.scrollIntoView(true);
-        return bunsTab.ancestor("div").getAttribute("class").equals("tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect");
+    @Step("Проверка, что при загрузки ситраницы вкладка \"Булки\" активна")
+    public SelenideElement isActiveBunsTab() {
+        return bunsTab.shouldBe(exist);
     }
 
-    @Step("Проверка, что вкладка \"Соусы\" имеет определенный cssClass")
-    public boolean isActiveSauceTab() {
-       sauceSection.scrollIntoView(true);
-        return sauceTab.ancestor("div").getAttribute("class").equals("tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect");
+    @Step("Проверка, что по клику на неактивную вкладку \"Соусы\" на странице имеется активная вкладка \"Соусы\"")
+    public SelenideElement isActiveSauceTab() {
+        inActiveSauceTab.click();
+        return sauceTab.shouldBe(exist);
     }
 
-    @Step("Проверка, что вкладка \"Начинки\" имеет определенный cssClass")
-    public boolean isActiveFillingTab() {
-        fillingSection.scrollIntoView(true);
-        return fillingTab.ancestor("div").getAttribute("class").equals("tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect");
+    @Step("Проверка, что по клику на неактивную вкладку \"Начинки\" на странице имеется активная вкладка \"Начинки\"")
+    public SelenideElement isActiveFillingTab() {
+        inActiveFillingTab.click();
+        return fillingTab.shouldBe(exist);
     }
 
     @Step("Клик по кнопке \"Войти в аккаунт\"")
     public LoginPage clickToHomeLoginButton () {
         homeLoginBtn.click();
-        return (LoginPage) page(LoginPage.class);
+        return page(LoginPage.class);
     }
 
     @Step("Проверка, что отображается кнопка \"Войти в аккаунт\"")

@@ -36,8 +36,6 @@ public class LkPage extends HeaderPage{
     @Step("Клик по кнопке \"Выход\"")
     public LoginPage clickToLogout () {
         logoutBtn.click();
-        return (LoginPage) page(LoginPage.class);
+        return page(LoginPage.class);
     }
-
-
 }

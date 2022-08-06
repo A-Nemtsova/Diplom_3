@@ -34,7 +34,7 @@ public class PasswordRecoveryPage extends HeaderPage {
     }
 
     @Step("Ввод email-a")
-    public PasswordRecoveryPage setFieldEmail (String email) { ;
+    public PasswordRecoveryPage setFieldEmail (String email) {
         inputEmail.setValue(email);
         return this;
     }
@@ -55,8 +55,6 @@ public class PasswordRecoveryPage extends HeaderPage {
     @Step("Клик по ссылке \"Войти\"")
     public LoginPage clickToLoginLink() {
         loginLink.click();
-        return (LoginPage) page(LoginPage.class);
+        return page(LoginPage.class);
     }
-
-
 }

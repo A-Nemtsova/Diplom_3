@@ -46,13 +46,13 @@ public class LoginPage extends HeaderPage {
     }
 
     @Step("Ввод email-a")
-    public LoginPage setFieldEmail (String email) { ;
+    public LoginPage setFieldEmail (String email) {
         inputEmail.setValue(email);
         return this;
     }
 
     @Step("Ввод пароля")
-    public LoginPage setFieldPassword (String password) { ;
+    public LoginPage setFieldPassword (String password) {
         inputPassword.setValue(password);
         return this;
     }
@@ -68,7 +68,7 @@ public class LoginPage extends HeaderPage {
         setFieldEmail(email);
         setFieldPassword(password);
         clickToLoginButton();
-        return (HomePage) page(HomePage.class);
+        return page(HomePage.class);
     }
 
     @Step("Проверка, что название ошибки соответствует ожидаемому")
@@ -80,13 +80,12 @@ public class LoginPage extends HeaderPage {
     @Step("Клик по ссылке \"Зарегистрироваться\"")
     public RegisterPage clickToRegistrationLink() {
         registrationLink.click();
-        return (RegisterPage) page(RegisterPage.class);
+        return page(RegisterPage.class);
     }
 
     @Step("Клик по ссылке \"Восстановить пароль\"")
     public PasswordRecoveryPage clickToRecoveryLink () {
         passwordRecoveryLink.click();
-        return (PasswordRecoveryPage) page(PasswordRecoveryPage.class);
+        return page(PasswordRecoveryPage.class);
     }
-
 }
