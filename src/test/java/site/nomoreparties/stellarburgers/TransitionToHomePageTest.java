@@ -11,13 +11,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import site.nomoreparties.stellarburgers.client.UserClient;
+import site.nomoreparties.stellarburgers.model.RequestForRegistration;
 import site.nomoreparties.stellarburgers.pageobjects.*;
 
 import static com.codeborne.selenide.Selenide.open;
 
 @Story("Переход из личного кабинета в конструктор")
 public class TransitionToHomePageTest {
-    private HomePage homePageWithoutLogin;
     private HomePage homePageWithLogin;
     private LkPage lkPage;
     private UserClient userClient;
@@ -37,12 +37,11 @@ public class TransitionToHomePageTest {
         */
         //открывается страница и создаётся экземпляр класса страницы
         userClient = new UserClient();
-        String email = userClient.getRandomEmail();
-        String name = userClient.getRandomName();
-        String password = userClient.getRandomPassword();
-        token = userClient.getTokenAfterRegistration(email, name, password);
-        homePageWithoutLogin = open(HomePage.URL, HomePage.class);
-        lkPage = homePageWithoutLogin.clickToHomeLoginButton().login(email, password).clickToLkBtnWithLogin();
+
+        RequestForRegistration requestForRegistration = RequestForRegistration.getRandomUser();
+        token = userClient.getTokenAfterRegistration(requestForRegistration);
+        HomePage homePageWithoutLogin = open(HomePage.URL, HomePage.class);
+        lkPage = homePageWithoutLogin.clickToHomeLoginButton().login(requestForRegistration.getEmail(), requestForRegistration.getPassword()).clickToLkBtnWithLogin();
     }
 
     @After

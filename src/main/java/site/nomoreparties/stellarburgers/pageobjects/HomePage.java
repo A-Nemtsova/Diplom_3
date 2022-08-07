@@ -20,7 +20,7 @@ public class HomePage extends HeaderPage {
     private SelenideElement titleHomePage;
 
     //локатор активной вкладки "Булки" (при загрузке страницы по умолчанию активна)
-    @FindBy(how = How.XPATH, using = ".//div[@class = 'tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']//span[text()='Булки']")
+    @FindBy(how = How.XPATH, using = ".//div[contains(@class, 'tab_tab_type_current__2BEPc')]//span[text()='Булки']")
     private SelenideElement bunsTab;
 
     //локатор не активной вкладки "Соусы"
@@ -28,7 +28,7 @@ public class HomePage extends HeaderPage {
     private SelenideElement inActiveSauceTab;
 
     //локатор активной вкладки "Соусы"
-    @FindBy(how = How.XPATH, using = ".//div[@class = 'tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']//span[text()='Соусы']")
+    @FindBy(how = How.XPATH, using = ".//div[contains(@class, 'tab_tab_type_current__2BEPc')]//span[text()='Соусы']")
     private SelenideElement sauceTab;
 
     //локатор не активной вкладки "Начинки"
@@ -36,7 +36,7 @@ public class HomePage extends HeaderPage {
     private SelenideElement inActiveFillingTab;
 
     //локатор активной вкладки "Начинки"
-    @FindBy(how = How.XPATH, using = ".//div[@class = 'tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect']//span[text() ='Начинки']")
+    @FindBy(how = How.XPATH, using = ".//div[contains(@class, 'tab_tab_type_current__2BEPc')]//span[text() ='Начинки']")
     private SelenideElement fillingTab;
 
     //локатор раздела "Булки"

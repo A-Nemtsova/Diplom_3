@@ -11,6 +11,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import site.nomoreparties.stellarburgers.client.UserClient;
+import site.nomoreparties.stellarburgers.model.RequestForLogin;
+import site.nomoreparties.stellarburgers.model.RequestForRegistration;
 import site.nomoreparties.stellarburgers.pageobjects.HomePage;
 import site.nomoreparties.stellarburgers.pageobjects.LoginPage;
 import site.nomoreparties.stellarburgers.pageobjects.RegisterPage;
@@ -27,6 +29,8 @@ public class RegisterTest {
     private String name;
     private String password;
 
+    private RequestForRegistration requestForRegistration;
+
     @Before
     public void openPage() {
         //Закомментировать /* и */ для запуска тестов в Яндекс.Браузере
@@ -40,9 +44,10 @@ public class RegisterTest {
         */
         //открывается страница и создаётся экземпляр класса страницы
         userClient = new UserClient();
-        email = userClient.getRandomEmail();
-        name = userClient.getRandomName();
-        password = userClient.getRandomPassword();
+        requestForRegistration = RequestForRegistration.getRandomUser();
+        name = requestForRegistration.getName();
+        email = requestForRegistration.getEmail();
+        password = requestForRegistration.getPassword();
         homePage = open(HomePage.URL, HomePage.class);
 
     }
@@ -53,7 +58,8 @@ public class RegisterTest {
         /*
         WebDriverRunner.getWebDriver().close();
         */
-        String token = userClient.getTokenAfterLogin(email, password);
+        RequestForLogin requestForLogin = new RequestForLogin(email, password);
+        String token = userClient.getTokenAfterLogin(requestForLogin);
         if (token.length() > 0) {
             userClient.deleteUser(token);
         }

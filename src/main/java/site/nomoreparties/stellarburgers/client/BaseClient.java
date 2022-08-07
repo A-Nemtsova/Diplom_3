@@ -14,6 +14,7 @@ public class BaseClient {
                 .log(LogDetail.ALL)
                 .setContentType(ContentType.JSON)
                 .addHeader("Authorization", accessToken)
+                .setBaseUri(BASE_URL)
                 .build();
     }
 }

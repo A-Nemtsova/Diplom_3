@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import site.nomoreparties.stellarburgers.client.UserClient;
+import site.nomoreparties.stellarburgers.model.RequestForRegistration;
 import site.nomoreparties.stellarburgers.pageobjects.HomePage;
 import site.nomoreparties.stellarburgers.pageobjects.LoginPage;
 import site.nomoreparties.stellarburgers.pageobjects.PasswordRecoveryPage;
@@ -26,9 +27,7 @@ public class LoginTest {
     private PasswordRecoveryPage passwordRecoveryPage;
     private LoginPage loginPage;
     private UserClient userClient;
-
     private String email;
-    private String name;
     private String password;
     private String token;
 
@@ -45,10 +44,10 @@ public class LoginTest {
         */
         //открывается страница и создаётся экземпляр класса страницы
         userClient = new UserClient();
-        email = userClient.getRandomEmail();
-        name = userClient.getRandomName();
-        password = userClient.getRandomPassword();
-        token = userClient.getTokenAfterRegistration(email, name, password);
+        RequestForRegistration requestForRegistration = RequestForRegistration.getRandomUser();
+        email = requestForRegistration.getEmail();
+        password = requestForRegistration.getPassword();
+        token = userClient.getTokenAfterRegistration(requestForRegistration);
         homePageWithoutLogin = open(HomePage.URL, HomePage.class);
     }
 

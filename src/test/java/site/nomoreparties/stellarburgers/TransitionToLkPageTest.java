@@ -11,6 +11,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import site.nomoreparties.stellarburgers.client.UserClient;
+import site.nomoreparties.stellarburgers.model.RequestForLogin;
+import site.nomoreparties.stellarburgers.model.RequestForRegistration;
 import site.nomoreparties.stellarburgers.pageobjects.*;
 
 import static com.codeborne.selenide.Selenide.open;
@@ -35,12 +37,10 @@ public class TransitionToLkPageTest {
         */
         //открывается страница и создаётся экземпляр класса страницы
         userClient = new UserClient();
-        String email = userClient.getRandomEmail();
-        String name = userClient.getRandomName();
-        String password = userClient.getRandomPassword();
-        token = userClient.getTokenAfterRegistration(email, name, password);
+        RequestForRegistration requestForRegistration = RequestForRegistration.getRandomUser();
+        token = userClient.getTokenAfterRegistration(requestForRegistration);
         HomePage homePageWithoutLogin = open(HomePage.URL, HomePage.class);
-        homePageWithLogin = homePageWithoutLogin.clickToHomeLoginButton().login(email, password);
+        homePageWithLogin = homePageWithoutLogin.clickToHomeLoginButton().login(requestForRegistration.getEmail(), requestForRegistration.getPassword());
     }
 
     @After
